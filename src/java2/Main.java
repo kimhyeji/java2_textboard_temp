@@ -12,6 +12,7 @@ import vo.Article;
 
 public class Main {
 	public static void main(String[] args) {
+		System.out.println("test");
 
 		Scanner sc = new Scanner(System.in);
 
