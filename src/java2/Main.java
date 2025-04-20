@@ -45,6 +45,13 @@ public class Main {
 				
 			}
 			else if (request.startsWith("/user/login")) { // 로그인
+				
+				// userSession이 null이 아니라는 것은 현재 회원이 들어 있다는 것
+				if (userSession != null ) {
+					System.out.println("이미 로그인된 상태 입니다.");
+					continue;
+				}
+				
 				System.out.print("사용자 아이디 : "); // 사용자 아이디 입력
 				String userLoginId = sc.next();
 				
