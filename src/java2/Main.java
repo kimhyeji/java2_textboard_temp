@@ -36,7 +36,31 @@ public class Main {
 			String request = sc.next();
 			
 			/******************** 유저 시작 *************************/
-			if (request.startsWith("/user/logout")) { // 로그아웃
+			if (request.startsWith("/user/update/pw")) { // 유저 비밀번호 변경
+				// 로그인이 안되어 있을 시 비밀번호를 변경하지 못하게 입구에서 막기
+				if (userSession == null ) {
+					System.out.println("로그인이 필요한 기능 입니다.");
+					continue;
+				}
+				
+				System.out.print("새로운 비밀번호 : "); // 사용자 아이디 입력
+				String newPw = sc.next();
+				
+				System.out.print("비밀번호 확인 : "); // 사용자 비밀번호 입력
+				String newPwConfirm = sc.next();
+				
+				// 새로운 비밀번호와 비밀번호 확인란이 일치하지 않으면 아래 조건 실행
+				if ( !newPw.equals(newPwConfirm) ) {
+					System.out.println("비밀번호가 일치하지 않습니다.");
+				} else {
+					// 일치한다면 해당 회원의 비밀번호를 다시 세팅을 해준 뒤 로그아웃 시킴
+					userSession.setUserLoginPw(newPw);
+					System.out.println("회원정보가 변경되었습니다. 다시 로그인해주세요");
+					userSession = null;
+				}
+				
+			}
+			else if (request.startsWith("/user/logout")) { // 로그아웃
 				// userSession이 null이 아닐 때 라는 말이 결국 다른 회원의 값이 들어 있는 것이기 때문에 로그인이 되어있다는 전재가 된다.				// 
 				if ( userSession != null ) {
 					// 다시 userSesstion을 null로 만들어 주면서 다시 빈 값으로 돌아가고 로그아웃 처리가 된다.
