@@ -24,15 +24,15 @@ public class User {
 		this.regDate = regDate;
 	}
 
-	public String getLoginId() {
+	public String getUserLoginId() {
 		return userLoginId;
 	}
 
-	public void setLoginId(String userLoginId) {
+	public void setUserLoginId(String userLoginId) {
 		this.userLoginId = userLoginId;
 	}
 
-	public String getLoginPw() {
+	public String getUserLoginPw() {
 		return userLoginPw;
 	}
 

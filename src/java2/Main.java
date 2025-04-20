@@ -32,7 +32,33 @@ public class Main {
 			String request = sc.next();
 			
 			/******************** 유저 시작 *************************/
-			if (request.startsWith("/user/join")) { // 회원가입
+			if (request.startsWith("/user/login")) { // 로그인
+				System.out.print("사용자 아이디 : "); // 사용자 아이디 입력
+				String userLoginId = sc.next();
+				
+				System.out.print("사용자 비밀번호 : "); // 사용자 비밀번호 입력
+				String userLoginPw = sc.next();
+				
+				User findByUser = null; // 유저 정보를 처음에는 null로 넣어주면서 아직 아무도 추가가 안됨
+				
+				// userList 돌면서 한 명 한 명 꺼내와서 조건문이 일치하는지 확인 해본다.
+				for ( User user : userList ) {
+					// 기존 회원의 로그인 아이디와 비밀번호가 현재 입력한 값이랑 같은지 체크.
+					// && 연산자를 통해 양쪽 모두가 참이어야 findByUser에 값을 추가한다.
+					if ( user.getUserLoginId().equals(userLoginId) && user.getUserLoginPw().equals(userLoginPw) ) {
+						findByUser = user;
+					}
+				}
+				
+				// 만약 여기까지 왔는데 findByUser가 아직도 여전히 null이라면 존재하지 않은 회원이라는 문구를 출력.
+				if ( findByUser == null ) {
+					System.out.println("존재하지 않은 회원입니다. 비밀번호 또는 아이디를 다시 확인해주세요.");
+				} else {
+					// 로그인 완료 + 로그인 문구
+					System.out.println("로그인이 완료 되었습니다.");
+				}
+			}
+			else if (request.startsWith("/user/join")) { // 회원가입
 				
 				String userLoginId = null;
 
@@ -49,7 +75,7 @@ public class Main {
 				    	// 조건 : userList에 있는 회원의 아이디와 현재 입력한 회원 아이디가 똑같은지 비교한다.
 				    	// 만약 조건이 맞다면 기존에 있던 아이디 라고 하는 것이기 때문에 isDuplicate 변수에 있던 상태 값을 true로 전환하면서
 				    	// break문을 통해 반복문을 빠져나간다.
-				        if (user.getLoginId().equals(userLoginId)) {
+				        if (user.getUserLoginId().equals(userLoginId)) {
 				            isDuplicate = true;
 				            break;
 				        }
@@ -68,6 +94,7 @@ public class Main {
 				    }
 				}
 				
+				// ** 비밀번호도 while문으로 묶어서 틀렸을때 여기서부터 다시 실행 될 수 있도록 만들어보기**
 				System.out.print("사용자 비밀번호 : ");
 				String userLoginPw = sc.next(); // 비밀번호 입력
 				
@@ -92,7 +119,7 @@ public class Main {
 				User user = new User();
 				// 객체로 묶어서 관리
 				
-				user.setLoginId(userLoginId); // 로그인 아이디 세팅
+				user.setUserLoginId(userLoginId); // 로그인 아이디 세팅
 				user.setUserLoginPw(userLoginPw); // 로그인 비밀번호 세팅
 				user.setUserName(userName); // 로그인 이름 세팅
 				user.setRegDate(CurrentDateTime.now()); // 현재 날짜로 저장
