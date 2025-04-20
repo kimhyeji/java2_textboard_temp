@@ -89,6 +89,7 @@ public class Main {
 				    System.out.print("사용자 아이디 : ");
 				    userLoginId = sc.next(); // 로그인 아이디 입력
 
+				    /* 유저 로그인 아이디 중복 체크 시작 */
 				    // 현재 입력한 아이디 값이 중복된 값인지를 확인하기 위해 만든 상태값 저장 변수
 				    // 기본값은 false값이며 아이디가 중복이 되었을 땐 true 값으로 바뀐다.
 				    boolean isDuplicate = false;
@@ -341,7 +342,7 @@ public class Main {
 
 				for (int i = 0; i < articleList.size(); i++) {
 					// 이미 게시글에 등록된 번호랑 사용자가 입력한 값이랑 비교
-					if (articleList.get(i).getArticleId() == articleId) {
+					if (articleList.get(i).getArticleId() == articleId && articleList.get(i).getUserId() == userSession.getUserId()) {
 						// 여기를 통과하면 값을 찾은 것임.
 						// 찾은 articleList 안에 있는 article 객체를
 						// 위에 임시 Article 클래스 변수 안에다가 할당
@@ -352,7 +353,7 @@ public class Main {
 				// for 문의 끝나고 최종적으로 article 안에 값이 null 이라면,
 				// 입력했던 번호의 게시글을 찾지 못한 것.
 				if (article == null) {
-					System.out.println(articleId + "번 게시글은 존재하지 않습니다.");
+					System.out.println(articleId + "번 게시글은 존재하지 않거나, 권한이 없습니다.");
 
 				} else {
 					System.out.println("====" + article.getArticleId() + "번 게시글 ====");
@@ -441,24 +442,33 @@ public class Main {
 
 					Collections.reverse(articleList); // 컬렉션 관련 유용한 유틸에서 reverse 메서드 사용
 
+					System.out.printf("======= %s님이 작성한 게시글 리스트 =======\n", userSession.getUserName());
 					for (Article article : articleList) {
-						System.out.println("번호 : " + article.getArticleId());
-						System.out.println("작성자 : " + article.getUserName());
-						System.out.println("제목 : " + article.getTitle());
-						System.out.println("내용 : " + article.getBody());
-						System.out.println();
+						// 게시글에 등록된 작성자 고유 번호와 현재 세션에 로그인된 고유 번호를 비교한다.
+						// 아래 조건식을 통과 해야지만 리스트 출력이 가능하다.
+						if ( article.getUserId() == userSession.getUserId() ) {
+							System.out.println("번호 : " + article.getArticleId());
+							System.out.println("작성자 : " + article.getUserName());
+							System.out.println("제목 : " + article.getTitle());
+							System.out.println("내용 : " + article.getBody());
+							System.out.println();
+						}
 					}
 
 					Collections.reverse(articleList); // 객체 값들은 계속 공유 되고 있기 때문에 거꾸로 돌렸다면, 다시 되돌려주는 작업 적용
 
 				} else if (sort.equals("asc")) { // 오름차순 (과거)
 
+					System.out.printf("======= %s님이 작성한 게시글 리스트 =======\n", userSession.getUserName());
+					
 					for (Article article : articleList) {
-						System.out.println("번호 : " + article.getArticleId());
-						System.out.println("작성자 : " + article.getUserName());
-						System.out.println("제목 : " + article.getTitle());
-						System.out.println("내용 : " + article.getBody());
-						System.out.println();
+						if ( article.getUserId() == userSession.getUserId() ) {
+							System.out.println("번호 : " + article.getArticleId());
+							System.out.println("작성자 : " + article.getUserName());
+							System.out.println("제목 : " + article.getTitle());
+							System.out.println("내용 : " + article.getBody());
+							System.out.println();
+						}
 					}
 
 				} else {
