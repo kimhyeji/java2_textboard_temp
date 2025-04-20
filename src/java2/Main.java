@@ -137,6 +137,11 @@ public class Main {
 			}
 			/******************** 유저 끝 *************************/
 			else if (request.startsWith("/post/update/article?articleId=")) { // 게시글 수정
+				
+				if ( userSession == null ) {
+					System.out.println("로그인이 필요한 기능입니다.");
+					continue;
+				}
 
 				/* 유효성 검사 및 예외 처리 시작 */
 				String[] params = request.split("=");
@@ -188,6 +193,12 @@ public class Main {
 			}
 
 			else if (request.startsWith("/get/search/article")) {
+				
+				if ( userSession == null ) {
+					System.out.println("로그인이 필요한 기능입니다.");
+					continue;
+				}
+				
 				// \\이스케이프 를 쓰는 이유는 자바에서 물음표(?) 자체를 문자로 인식하지 않기 때문에 문자 자체를 알려주기 위함.
 				String[] path = request.split("\\?");
 				// 이렇게 자르게 되면 path 에는 [ "/get/search/article", "title=title&body=body" ] 이런식으로
@@ -251,36 +262,6 @@ public class Main {
 					}
 				}
 
-//				버전 2
-//				for (Article article : articleList) {
-//				    boolean titleMatch = (title == null) || article.getTitle().contains(title);
-//				    boolean bodyMatch = (body == null) || article.getBody().contains(body);
-//				    
-//				    // title과 body 둘 다 null이 아닌 경우: 두 조건 모두 만족해야 함
-//				    // title만 null이 아닌 경우: title만 일치하면 됨
-//				    // body만 null이 아닌 경우: body만 일치하면 됨
-//				    if ((title != null && body != null && titleMatch && bodyMatch) ||
-//				        (title != null && body == null && titleMatch) ||
-//				        (title == null && body != null && bodyMatch)) {
-//				        findByArticles.add(article);
-//				    }
-//				}
-
-//				버전 3 
-//				for (Article article : articleList) {
-//				    // 둘 다 null이면 건너뛰기 (아무 조건도 없는 경우)
-//				    if (title == null && body == null) continue;
-//				    
-//				    // title이 존재하면 title 조건을 만족해야 함
-//				    if (title != null && !article.getTitle().contains(title)) continue;
-//				    
-//				    // body가 존재하면 body 조건을 만족해야 함
-//				    if (body != null && !article.getBody().contains(body)) continue;
-//				    
-//				    // 여기까지 왔다면 모든 조건을 만족
-//				    findByArticles.add(article);
-//				}
-
 				// 여기서 최종적으로 findByArticles 에 값이 있는지 없는지 체크
 				if (findByArticles.size() == 0) {
 					System.out.println("찾는 게시글이 존재하지 않습니다.");
@@ -301,6 +282,12 @@ public class Main {
 			// equals 로 하면 동적으로 변하는 게시글 번호값을 가져올 수 없음.
 			// 그래서 contains 아니면 startsWith 메서드를 써야 함.
 			else if (request.startsWith("/get/article?articleId=")) {
+				
+				if ( userSession == null ) {
+					System.out.println("로그인이 필요한 기능입니다.");
+					continue;
+				}
+				
 				// = 를 기준으로 쪼개기.
 				// 조각이 생기기 때문에 [배열]이 리턴되는 것
 				// ["/get/article?articleId", "특정정수값"]
@@ -366,6 +353,11 @@ public class Main {
 			}
 
 			else if (request.startsWith("/post/remove/article?articleId=")) {
+				
+				if ( userSession == null ) {
+					System.out.println("로그인이 필요한 기능입니다.");
+					continue;
+				}
 
 				/* 유효성 검사 및 예외 처리 시작 */
 				String[] params = request.split("=");
@@ -408,6 +400,12 @@ public class Main {
 			}
 
 			else if (request.startsWith("/get/article?sort=")) {
+				
+				if ( userSession == null ) {
+					System.out.println("로그인이 필요한 기능입니다.");
+					continue;
+				}
+				
 				String[] params = request.split("=");
 
 				if (params.length < 2) {
@@ -446,6 +444,11 @@ public class Main {
 			}
 
 			else if (request.equals("/post/article")) {
+				
+				if ( userSession == null ) {
+					System.out.println("로그인이 필요한 기능입니다.");
+					continue;
+				}
 
 				sc.nextLine(); // 버퍼 비우기
 
