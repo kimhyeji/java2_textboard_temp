@@ -26,6 +26,7 @@ public class Main {
 		User userSession = null; // 이게 null값이면 현재 로그아웃 상태
 
 		int articleLastId = 0;
+		int userLastId = 0;
 
 		System.out.println("텍스트 게시판 시작");
 
@@ -141,6 +142,8 @@ public class Main {
 				User user = new User();
 				// 객체로 묶어서 관리
 				
+				userLastId++;
+				user.setUserId(userLastId);
 				user.setUserLoginId(userLoginId); // 로그인 아이디 세팅
 				user.setUserLoginPw(userLoginPw); // 로그인 비밀번호 세팅
 				user.setUserName(userName); // 로그인 이름 세팅
