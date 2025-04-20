@@ -32,7 +32,7 @@ public class User {
 		this.userLoginId = userLoginId;
 	}
 
-	public String setLoginPw() {
+	public String getLoginPw() {
 		return userLoginPw;
 	}
 

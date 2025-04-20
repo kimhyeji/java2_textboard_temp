@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import util.CurrentDateTime;
 import vo.Article;
+import vo.User;
 
 public class Main {
 	public static void main(String[] args) {
@@ -16,6 +17,11 @@ public class Main {
 
 		// 게시글 목록 저장소
 		List<Article> articleList = new ArrayList<Article>();
+
+		// 게시글 목록 저장소
+		// 자동 import 단축키 : Ctrl + Shift + O(알파벳)
+		List<User> userList = new ArrayList<>();
+
 		int articleLastId = 0;
 
 		System.out.println("텍스트 게시판 시작");
@@ -24,8 +30,37 @@ public class Main {
 			System.out.print("명령어 : ");
 
 			String request = sc.next();
+			
+			/******************** 유저 시작 *************************/
+			if (request.startsWith("/post/user")) { // 회원가입
+				
+				System.out.print("사용자 아이디 : ");
+				String userLoginId = sc.next(); // 로그인 아이디 입력
+				
+				System.out.print("사용자 비밀번호 : ");
+				String userLoginPw = sc.next(); // 비밀번호 입력
+				
+				System.out.print("사용자 비밀번호 확인 : ");
+				String userLoginPwConfirm = sc.next(); // 비밀번호를 정말 맞게 입력 했는지 확인
+				
+				System.out.print("사용자 이름 : ");
+				String userName = sc.next(); // 이름 입력
+				
+				User user = new User();
+				// 객체로 묶어서 관리
+				
+				user.setLoginId(userLoginId); // 로그인 아이디 세팅
+				user.setUserLoginPw(userLoginPw); // 로그인 비밀번호 세팅
+				user.setUserName(userName); // 로그인 이름 세팅
+				user.setRegDate(CurrentDateTime.now()); // 현재 날짜로 저장
+				
+				userList.add(user); // 유저 리스트에 회원 정보를 객체로 묶어서 저장
 
-			if (request.startsWith("/post/update/article?articleId=")) { // 게시글 수정
+				System.out.printf("%s님 회원가입이 완료되었습니다. 환영합니다^^!\n", userName);
+				// 센스있는 한 마디^^
+			}
+			/******************** 유저 끝 *************************/
+			else if (request.startsWith("/post/update/article?articleId=")) { // 게시글 수정
 
 				/* 유효성 검사 및 예외 처리 시작 */
 				String[] params = request.split("=");
@@ -139,7 +174,7 @@ public class Main {
 						}
 					}
 				}
-				
+
 //				버전 2
 //				for (Article article : articleList) {
 //				    boolean titleMatch = (title == null) || article.getTitle().contains(title);
@@ -154,7 +189,7 @@ public class Main {
 //				        findByArticles.add(article);
 //				    }
 //				}
-				
+
 //				버전 3 
 //				for (Article article : articleList) {
 //				    // 둘 다 null이면 건너뛰기 (아무 조건도 없는 경우)
@@ -169,7 +204,7 @@ public class Main {
 //				    // 여기까지 왔다면 모든 조건을 만족
 //				    findByArticles.add(article);
 //				}
-				
+
 				// 여기서 최종적으로 findByArticles 에 값이 있는지 없는지 체크
 				if (findByArticles.size() == 0) {
 					System.out.println("찾는 게시글이 존재하지 않습니다.");
@@ -366,11 +401,15 @@ public class Main {
 				System.out.println("/get/help - 도움말 출력");
 				System.out.println("/get/article?articleId= - 게시글 상세 출력");
 
+				System.out.println("== 게시글과 관련된 기능 ==");
 				System.out.println("/post/article -> 게시글 작성");
 				System.out.println("/post/update/article?articleId= -> 게시글 수정");
 				System.out.println("/post/remove/article?articleId= -> 게시글 삭제");
 				System.out.println("/post/removeAll/article -> 게시글 전부 삭제");
 				System.out.println("/get/article?sort={sort} -> 게시글 출력(desc, asc)");
+				
+				System.out.println("== 회원과 관련된 기능 ==");
+				System.out.println("/post/user -> 회원가입");
 
 			}
 
