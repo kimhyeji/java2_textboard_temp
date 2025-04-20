@@ -406,7 +406,8 @@ public class Main {
 				boolean isRemoveArticle = false;
 
 				for (int i = 0; i < articleList.size(); i++) {
-					if (articleList.get(i).getArticleId() == articleId) {
+					// 비교를 할 때 이젠 작성자 까지 같이 비교를 해야함.
+					if (articleList.get(i).getArticleId() == articleId && articleList.get(i).getUserId() == userSession.getUserId()) {
 						articleList.remove(i); // 현재 찾은 게시글의 인덱스 삭제 즉, 찾은 게시글 게시글 삭제 처리
 						isRemoveArticle = true;
 						break; // 찾았다면 더 지체하지말고 for 문 브레이크.
@@ -417,7 +418,7 @@ public class Main {
 					System.out.println(articleId + "번 게시글을 삭제하였습니다.");
 
 				} else {
-					System.out.println(articleId + "번 게시글은 존재하지 않습니다.");
+					System.out.println(articleId + "번 게시글은 존재하지 않거나, 권한이 없습니다.");
 				}
 
 			}
@@ -525,6 +526,8 @@ public class Main {
 				
 				System.out.println("== 회원과 관련된 기능 ==");
 				System.out.println("/user/join-> 회원가입");
+				System.out.println("/user/login-> 로그인");
+				System.out.println("/user/logout-> 로그아웃");
 
 			}
 
