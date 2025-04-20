@@ -21,6 +21,9 @@ public class Main {
 		// 게시글 목록 저장소
 		// 자동 import 단축키 : Ctrl + Shift + O(알파벳)
 		List<User> userList = new ArrayList<>();
+		
+		// 로그인 유저의 상태를 유지시키기위한 변수 생성(세션)
+		User userSession = null; // 이게 null값이면 현재 로그아웃 상태
 
 		int articleLastId = 0;
 
@@ -55,6 +58,9 @@ public class Main {
 					System.out.println("존재하지 않은 회원입니다. 비밀번호 또는 아이디를 다시 확인해주세요.");
 				} else {
 					// 로그인 완료 + 로그인 문구
+					userSession = findByUser;
+					// 반복문에서 찾아온 회원을 세션에 넣어 줌으로써 현재 로그인이 되었다는 것처럼 비슷한 기능 구현
+					// 진짜 세션은 아니고 세션 비슷하게 흉내만 내는 것
 					System.out.println("로그인이 완료 되었습니다.");
 				}
 			}
