@@ -12,8 +12,6 @@ import vo.Article;
 
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("test");
-
 		Scanner sc = new Scanner(System.in);
 
 		// 게시글 목록 저장소
