@@ -35,7 +35,16 @@ public class Main {
 			String request = sc.next();
 			
 			/******************** 유저 시작 *************************/
-			if (request.startsWith("/user/login")) { // 로그인
+			if (request.startsWith("/user/logout")) { // 로그아웃
+				// userSession이 null이 아닐 때 라는 말이 결국 다른 회원의 값이 들어 있는 것이기 때문에 로그인이 되어있다는 전재가 된다.				// 
+				if ( userSession != null ) {
+					// 다시 userSesstion을 null로 만들어 주면서 다시 빈 값으로 돌아가고 로그아웃 처리가 된다.
+					userSession = null;
+					System.out.println("로그아웃 되었습니다.");
+				}
+				
+			}
+			else if (request.startsWith("/user/login")) { // 로그인
 				System.out.print("사용자 아이디 : "); // 사용자 아이디 입력
 				String userLoginId = sc.next();
 				
@@ -283,6 +292,7 @@ public class Main {
 			// 그래서 contains 아니면 startsWith 메서드를 써야 함.
 			else if (request.startsWith("/get/article?articleId=")) {
 				
+				// 세션에 있는 정보를 사용하여 현재 회원이 로그인 되었는지 판단 후 안쪽으로 들어갈 수 있게 구현
 				if ( userSession == null ) {
 					System.out.println("로그인이 필요한 기능입니다.");
 					continue;
