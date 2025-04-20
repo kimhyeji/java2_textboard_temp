@@ -32,10 +32,41 @@ public class Main {
 			String request = sc.next();
 			
 			/******************** 유저 시작 *************************/
-			if (request.startsWith("/post/user")) { // 회원가입
+			if (request.startsWith("/user/join")) { // 회원가입
 				
-				System.out.print("사용자 아이디 : ");
-				String userLoginId = sc.next(); // 로그인 아이디 입력
+				String userLoginId = null;
+
+				while (true) {
+				    System.out.print("사용자 아이디 : ");
+				    userLoginId = sc.next(); // 로그인 아이디 입력
+
+				    // 현재 입력한 아이디 값이 중복된 값인지를 확인하기 위해 만든 상태값 저장 변수
+				    // 기본값은 false값이며 아이디가 중복이 되었을 땐 true 값으로 바뀐다.
+				    boolean isDuplicate = false;
+
+				    // userList에서 한명씩 꺼내와서 반복문을 돌며 조건을 체크한다.
+				    for (User user : userList) {
+				    	// 조건 : userList에 있는 회원의 아이디와 현재 입력한 회원 아이디가 똑같은지 비교한다.
+				    	// 만약 조건이 맞다면 기존에 있던 아이디 라고 하는 것이기 때문에 isDuplicate 변수에 있던 상태 값을 true로 전환하면서
+				    	// break문을 통해 반복문을 빠져나간다.
+				        if (user.getLoginId().equals(userLoginId)) {
+				            isDuplicate = true;
+				            break;
+				        }
+				    }
+				    
+				    // isDuplicate 변수가 처음에는 false였지만 기존에 쓰던 회원이 존재하여 true로 바뀌게 되면
+				    // 아래 조건문이 실행 되면서 사용자에게 이미 사용중인 아이디라는 문구를 남겨준다.
+				    if (isDuplicate) {
+				        System.out.printf("%s(은)는 이미 사용중인 아이디입니다.\n", userLoginId);
+				    } else {
+				    	// 만약 여전히 isDuplicate 변수가 false값이라면 아직 해당 아이가 존재한 이력이 없는 것이기 때문에
+				    	// 이쪽 조건이 실행 되면서 사용 가능 문구를 띄워준 후 while에서 계속 돌던 반복문을 break로 종료 시킨다.
+				        System.out.printf("%s(은)는 사용가능한 아이디입니다.\n", userLoginId);
+				        break;
+				        // 종료하게되면 자연스럽게 비밀번호를 입력할 수 있는 곳으로 넘어간다.
+				    }
+				}
 				
 				System.out.print("사용자 비밀번호 : ");
 				String userLoginPw = sc.next(); // 비밀번호 입력
@@ -421,7 +452,7 @@ public class Main {
 				System.out.println("/get/article?sort={sort} -> 게시글 출력(desc, asc)");
 				
 				System.out.println("== 회원과 관련된 기능 ==");
-				System.out.println("/post/user -> 회원가입");
+				System.out.println("/user/join-> 회원가입");
 
 			}
 
